@@ -1,8 +1,8 @@
 
-import { Resend } from "resend";
+// import { Resend } from "resend";
 import nodemailer from "nodemailer";
 // تنظیمات Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 const EMILUSER: string = process.env.EMILUSER!
 const EMILPASS: string = process.env.EMILPASS!
 const HOSTEMAIL: string = process.env.HOSTEMAIL!
