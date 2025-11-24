@@ -69,7 +69,7 @@ const slice = createSlice({
 
         state.list = action.payload;
       })
-      .addCase(handleGroup.fulfilled, (state, action) => {
+      .addCase(handleGroup.fulfilled, (state:any, action:any) => {
         const { result } = action.payload;
         if (Array.isArray(result)) {
           result.forEach((item) => {
