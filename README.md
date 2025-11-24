@@ -24,16 +24,11 @@ https://github.com/user-attachments/assets/fe496a2b-4582-49b9-bd3a-0908a6359d2f
 - [ ] Nested Tasks
 - [ ] Category / Tags
 - [ ] جستجو و فیلتر Taskها
-- [ ] ذخیره در LocalStorage
-- [ ] انیمیشن‌ها با Framer Motion
 
 ### مرحله ۳ – Pro Level
 - [ ] Authentication
 - [ ] اتصال به دیتابیس
 - [ ] Drag & Drop
-- [ ] Export / Import Taskها
-- [ ] Unit & Integration Test
-- [ ] CI/CD با GitHub Actions
 
 ### مرحله ۴ – Portfolio-Ready
 - [ ] داکیومنت کامل
