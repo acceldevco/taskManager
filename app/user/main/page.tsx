@@ -35,7 +35,7 @@ const KanbanBoard = () => {
   const removeMember = (id: string) => {
     setForm({
       ...form,
-      members: form.members.filter((m) => m.id !== id),
+      members: form.members.filter((m:any) => m.id !== id),
     });
   };
 
@@ -259,16 +259,16 @@ const KanbanBoard = () => {
   };
   const [dialog, setdialog] = useState<any>(0);
   const [data, setData] = useState(initialData);
-  const [selectedGroup, setSelectedGroup] = useState(data.groups[0]);
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedGroup, setSelectedGroup]:any = useState(data.groups[0]);
+  const [selectedTask, setSelectedTask]:any = useState(null);
 
-  const priorityColors = {
+  const priorityColors:any = {
     high: "bg-red-100 text-red-700 border-red-300",
     medium: "bg-yellow-100 text-yellow-700 border-yellow-300",
     low: "bg-green-100 text-green-700 border-green-300",
   };
 
-  const priorityText = {
+  const priorityText:any = {
     high: "فوری",
     medium: "متوسط",
     low: "کم",
@@ -548,7 +548,7 @@ const KanbanBoard = () => {
                     برچسب‌ها
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {selectedTask.labels.map((label, idx) => (
+                    {selectedTask.labels.map((label:any, idx:any) => (
                       <span
                         key={idx}
                         className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
@@ -566,7 +566,7 @@ const KanbanBoard = () => {
                       نظرات ({selectedTask.comments.length})
                     </h4>
                     <div className="space-y-3">
-                      {selectedTask.comments.map((comment) => (
+                      {selectedTask.comments.map((comment:any) => (
                         <div
                           key={comment.id}
                           className="bg-gray-50 rounded-lg p-3"
@@ -795,8 +795,8 @@ const KanbanBoard = () => {
                     boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)',
                     width: window.innerWidth < 400 ? '100%' : 'auto'
                   }}
-                  onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-                  onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
+                  onMouseOver={(e:any) => e.target.style.transform = 'scale(1.05)'}
+                  onMouseOut={(e:any) => e.target.style.transform = 'scale(1)'}
                 >
                   ➕ افزودن
                 </button>
@@ -809,7 +809,7 @@ const KanbanBoard = () => {
                   overflowY: 'auto',
                   padding: '0.5rem'
                 }}>
-                  {form.members.map((m) => (
+                  {form.members.map((m:any) => (
                     <div
                       key={m.id}
                       style={{
@@ -859,8 +859,8 @@ const KanbanBoard = () => {
                           transition: 'all 0.2s',
                           flexShrink: 0
                         }}
-                        onMouseOver={(e) => e.target.style.background = '#dc2626'}
-                        onMouseOut={(e) => e.target.style.background = '#ef4444'}
+                        onMouseOver={(e:any) => e.target.style.background = '#dc2626'}
+                        onMouseOut={(e:any) => e.target.style.background = '#ef4444'}
                       >
                         ❌
                       </button>
@@ -960,11 +960,11 @@ const KanbanBoard = () => {
                   boxShadow: '0 4px 6px rgba(239, 68, 68, 0.3)',
                   width: window.innerWidth < 400 ? '100%' : 'auto'
                 }}
-                onMouseOver={(e) => {
+                onMouseOver={(e:any) => {
                   e.target.style.transform = 'translateY(-2px)';
                   e.target.style.boxShadow = '0 6px 12px rgba(239, 68, 68, 0.4)';
                 }}
-                onMouseOut={(e) => {
+                onMouseOut={(e:any) => {
                   e.target.style.transform = 'translateY(0)';
                   e.target.style.boxShadow = '0 4px 6px rgba(239, 68, 68, 0.3)';
                 }}
@@ -988,11 +988,11 @@ const KanbanBoard = () => {
                   boxShadow: '0 4px 6px rgba(102, 126, 234, 0.4)',
                   width: window.innerWidth < 400 ? '100%' : 'auto'
                 }}
-                onMouseOver={(e) => {
+                onMouseOver={(e:any) => {
                   e.target.style.transform = 'translateY(-2px)';
                   e.target.style.boxShadow = '0 6px 12px rgba(102, 126, 234, 0.5)';
                 }}
-                onMouseOut={(e) => {
+                onMouseOut={(e:any) => {
                   e.target.style.transform = 'translateY(0)';
                   e.target.style.boxShadow = '0 4px 6px rgba(102, 126, 234, 0.4)';
                 }}
