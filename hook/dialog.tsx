@@ -17,8 +17,8 @@ export const useDialogManager = () => {
 
   // --- کنترل باز و بسته شدن ---
   const set = (id: string, v: boolean, payload?: any) => {
-    setItems((x) => ({ ...x, [id]: v }));
-    if (payload !== undefined) setPayloads((p) => ({ ...p, [id]: payload }));
+    setItems((x:any) => ({ ...x, [id]: v }));
+    if (payload !== undefined) setPayloads((p:any) => ({ ...p, [id]: payload }));
   };
 
   const open = (id: string, payload?: any) => set(id, true, payload);
@@ -73,15 +73,15 @@ export const useDialogManager = () => {
     type: "success" | "error" | "info" = "info"
   ) => {
     const id = Date.now();
-    setToasts((t) => [...t, { id, msg, type }]);
-    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3000);
+    setToasts((t:any) => [...t, { id, msg, type }]);
+    setTimeout(() => setToasts((t:any) => t.filter((x:any) => x.id !== id)), 3000);
   };
 
   const ToastContainer = () =>
     typeof document !== "undefined"
       ? createPortal(
           <div className="fixed top-4 right-4 z-50 space-y-2">
-            {toasts.map((t) => (
+            {toasts.map((t:any) => (
               <div
                 key={t.id}
                 className={`px-4 py-2 rounded-lg shadow text-white animate-fadeIn
