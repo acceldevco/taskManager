@@ -55,7 +55,7 @@ const tasksSlice = createSlice({
     },
 
     moveColumn(
-      state,
+      state:any,
       action: PayloadAction<{
         fromOrder: number;
         toOrder: number;
@@ -67,10 +67,10 @@ const tasksSlice = createSlice({
 
       // پیدا کردن ایندکس‌ها براساس order
       const fromIndex = mainPage.columns.findIndex(
-        (col) => col.order === fromOrder
+        (col:any) => col.order === fromOrder
       );
       const toIndex = mainPage.columns.findIndex(
-        (col) => col.order === toOrder
+        (col:any) => col.order === toOrder
       );
 
       // بررسی معتبر بودن
@@ -84,7 +84,7 @@ const tasksSlice = createSlice({
       mainPage.columns.splice(toIndex, 0, movedColumn);
 
       // آپدیت order بر اساس ترتیب جدید
-      mainPage.columns.forEach((col, i) => {
+      mainPage.columns.forEach((col:any, i:any) => {
         col.order = i + 1;
       });
 
