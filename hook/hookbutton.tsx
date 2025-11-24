@@ -14,7 +14,7 @@ export const HookButton = ({
         display: "contents",
       }}
       type={type}
-      onClick={async (e) => {
+      onClick={async (e:any) => {
         e.preventDefault();
         setload(1);
         // console.log(e);
