@@ -18,7 +18,7 @@ import {
 
 
 export default function LandingPage() {
-  const [openFaq, setOpenFaq] = useState(null);
+  const [openFaq, setOpenFaq]:any = useState<any>(null);
   const features = [
     {
       icon: <ClipboardCheck className="w-8 h-8" />,
