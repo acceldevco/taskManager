@@ -13,7 +13,7 @@ export const ContextProvider = ({
   const [user, setUser] = useState<any>(null);
   const [crypto, setcrypto] = useState<any>([]);
   const [data, setdata] = useState<any>({
-    imagesadmin: JSON.parse(localStorage.getItem("image") || "[]"),
+    // imagesadmin: JSON.parse(localStorage.getItem("image") || "[]"),
   });
   // const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
