@@ -136,7 +136,7 @@ import prisma from "@/prisma/prisma";
 
 const JWT_SECRET = process.env.ACCESS_TOKEN!;
 
-export default async function handler(req, res) {
+export default async function handler(req:any, res:any) {
   if (!res.socket.server.io) {
     console.log("🔹 Starting new Socket.IO server...");
 
