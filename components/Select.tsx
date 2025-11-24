@@ -140,7 +140,7 @@ export default function Select({
   watch,
   options,
   defaultValue,
-}: SelectProps) {
+}: any) {
   const hasError = Boolean(errors?.[name]);
   const isDirty = Boolean(dirtyFields?.[name]);
   const value = watch?.(name);
@@ -189,7 +189,7 @@ export default function Select({
             {placeholder}
           </option>
 
-          {options.map(({ label, value }) => (
+          {options.map(({ label, value }:any) => (
             <option key={value} value={value}>
               {label}
             </option>
