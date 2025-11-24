@@ -41,7 +41,7 @@ var main: any = {};
 var information: any = {};
 
 // کامپوننت TaskCard بهبود یافته
-function TaskCard({ crypto, task, index, dataget,loading }: any) {
+function TaskCard({ crypto, task, index, dataget, loading }: any) {
   const ui: any = useContext(ContextMain);
 
   return (
@@ -141,7 +141,7 @@ function TaskCard({ crypto, task, index, dataget,loading }: any) {
                 <User size={12} className="text-white" />
               </button>
               <div className="flex -space-x-2">
-                {task?.assignedMembers?.slice(0, 3).map((d, i) => (
+                {task?.assignedMembers?.slice(0, 3).map((d: any, i: any) => (
                   <span
                     key={i}
                     className="inline-flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 text-xs font-semibold bg-gradient-to-br from-blue-100 to-blue-200 text-blue-700 rounded-full border-2 border-white shadow-sm"
@@ -167,11 +167,11 @@ function TaskCard({ crypto, task, index, dataget,loading }: any) {
                 }}
                 className="flex items-center gap-1 text-gray-500 hover:text-blue-600 transition-colors relative"
               >
-                {task?.comments?.filter(
-                  (c) => Date.now() - new Date(c.createdAt) > 3 * 864e5
+                {task?.comments?.filter((c: any) =>
+                  Date.now() - new Date(c?.createdAt).getTime() > 3 * 864e5
                 ).length >= 3 && (
-                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500" />
-                )}
+                    <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500" />
+                  )}
                 <MessageCircle size={14} />
                 <span className="text-xs font-medium">
                   {task?.comments?.length ?? 0}
@@ -184,15 +184,15 @@ function TaskCard({ crypto, task, index, dataget,loading }: any) {
                   {!task?.dueDate
                     ? "بدون تاریخ"
                     : ((d) =>
-                        d > 0
-                          ? `${d} روز مانده`
-                          : d < 0
+                      d > 0
+                        ? `${d} روز مانده`
+                        : d < 0
                           ? `${-d} روز گذشته`
                           : "امروز")(
-                        Math.ceil(
-                          (+new Date(task.dueDate) - Date.now()) / 86400000
-                        )
-                      )}
+                            Math.ceil(
+                              (+new Date(task.dueDate) - Date.now()) / 86400000
+                            )
+                          )}
                 </span>
               </div>
             </div>
@@ -204,7 +204,7 @@ function TaskCard({ crypto, task, index, dataget,loading }: any) {
 }
 
 // کامپوننت Column بهبود یافته
-function Column({ column, crypto, index, dataget, onDragend, setload,loading }: any) {
+function Column({ column, crypto, index, dataget, onDragend, setload, loading }: any) {
   const getColumnColor = (name: string) => {
     if (name === "To Do") return "from-red-50 to-pink-50 border-red-200";
     if (name === "In Progress")
@@ -223,11 +223,11 @@ function Column({ column, crypto, index, dataget, onDragend, setload,loading }: 
   const ui = useContext(ContextMain);
   const [isDragging, setIsDragging] = useState(false);
 
-  const onDragStart = (i, col) => {
+  const onDragStart = (i: any, col: any) => {
     setIsDragging(true);
   };
 
-  const onDragEnter = (i, col) => {
+  const onDragEnter = (i: any, col: any) => {
     (window as any).test = { ordernew: i, to: col };
   };
 
@@ -240,7 +240,7 @@ function Column({ column, crypto, index, dataget, onDragend, setload,loading }: 
 
   const dispatch = useDispatch<any>();
 
-  const onDragEnd = async (d, i) => {
+  const onDragEnd = async (d: any, i: any) => {
     setIsDragging(false);
     var col = {
       columnId: i,
@@ -338,10 +338,9 @@ function Column({ column, crypto, index, dataget, onDragend, setload,loading }: 
                 {...provided.droppableProps}
                 className={`
                   space-y-2 min-h-[100px] rounded-lg transition-all duration-200 p-1
-                  ${
-                    snapshot.isDraggingOver
-                      ? "bg-white/50 ring-2 ring-blue-300"
-                      : ""
+                  ${snapshot.isDraggingOver
+                    ? "bg-white/50 ring-2 ring-blue-300"
+                    : ""
                   }
                 `}
               >
@@ -387,7 +386,7 @@ export default function TaskBoard({ cry }: any) {
 
   const ui = useContext(ContextMain);
   const taskData = useSelector((s: any) => s.task.list[0]);
-var { loading, user, error }: any = useLazyVerify();
+  var { loading, user, error }: any = useLazyVerify();
   // تشخیص دستگاه موبایل
   useEffect(() => {
     const checkMobile = () => {
@@ -417,7 +416,7 @@ var { loading, user, error }: any = useLazyVerify();
   //   };
   // }, []);
 
-    // ✅ اتصال WebSocket با cleanup و جلوگیری از اتصال مجدد غیرضروری
+  // ✅ اتصال WebSocket با cleanup و جلوگیری از اتصال مجدد غیرضروری
   useEffect(() => {
     const controller = new AbortController();
     const connectSocket = async () => {
@@ -444,7 +443,7 @@ var { loading, user, error }: any = useLazyVerify();
       controller.abort();
       socketInstance?.then((s) => s?.disconnect());
     };
-  }, [params, query.data,setSocket]);
+  }, [params, query.data, setSocket]);
 
 
 
@@ -461,7 +460,7 @@ var { loading, user, error }: any = useLazyVerify();
   //   }
   // }, [query?.dataUpdatedAt]);
 
-    // ✅ سینک Redux با query (فقط هنگام تغییر داده)
+  // ✅ سینک Redux با query (فقط هنگام تغییر داده)
   useEffect(() => {
     if (query?.data) {
       dispatch(setTasks(query.data));
@@ -470,7 +469,7 @@ var { loading, user, error }: any = useLazyVerify();
 
 
 
-    const handleDragEnd = useCallback(
+  const handleDragEnd = useCallback(
     (result: DropResult) => {
       const { source, destination, type } = result;
       if (!destination || type === "COLUMN") return;
@@ -614,10 +613,9 @@ var { loading, user, error }: any = useLazyVerify();
                 {...provided.droppableProps}
                 className={`
                   grid gap-3 sm:gap-4
-                  ${
-                    isMobile
-                      ? "grid-cols-1"
-                      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  ${isMobile
+                    ? "grid-cols-1"
+                    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                   }
                   min-h-[200px]
                   transition-all duration-200
@@ -633,7 +631,7 @@ var { loading, user, error }: any = useLazyVerify();
                   </div>
                 ) : (
                   <>
-                                       {/* <div>
+                    {/* <div>
                       
                       {mutation.isPending ? (
                         <LoaderCircle className="w-6 h-6 animate-spin text-gray-500" />
@@ -642,14 +640,14 @@ var { loading, user, error }: any = useLazyVerify();
                       )}
                     </div> */}
                     <>
-                      {taskData?.columns?.map((col, i) => (
+                      {taskData?.columns?.map((col: any, i: any) => (
                         <div key={col.id} className="h-fit">
                           <Column
                             crypto={cry}
                             column={col}
                             index={i}
                             dataget={query.refetch}
-loading={mutation.isPending}
+                            loading={mutation.isPending}
                           />
                         </div>
                       ))}
