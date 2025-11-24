@@ -1,0 +1,190 @@
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URLLOCAL")
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+
+enum ActivityAction {
+  CREATED
+  MOVED
+  UPDATED
+  DELETED
+  COMMENTED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  tokens        VerificationToken[]
+  groupsCreated Group[]             @relation("GroupCreator")
+  memberships   Member[]
+  // assignedTasks Task[]              @relation("AssignedTo")
+  comments      Comment[]
+  activities    Activity[]          @relation("ActivityBy")
+}
+
+model VerificationToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Group {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime   @default(now())
+  createdById String
+  created_by  User       @relation("GroupCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  // memberCount Int
+  visibility  Visibility @default(PRIVATE)
+  coverImage  String?
+
+  members Member[]
+  columns Column[]
+
+  @@index([createdAt])
+}
+
+
+model Column {
+  id      String @id @default(uuid())
+  name    String
+  order   Int
+  groupId String
+  colortask    String?
+  group Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@index([groupId, order])
+}
+
+model Member {
+  id        String @id @default(uuid())
+  userEmail String
+  groupId   String
+  role      String @default("member")
+
+  user  User  @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  
+  // هر عضو می‌تونه در چند تسک مشارکت کنه
+  assignedTasks TaskAssignment[]
+
+  @@unique([userEmail, groupId])
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  columnId    String
+  column      Column    @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  dueDate     DateTime?
+  priority    Priority  @default(MEDIUM)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  order       Int       @default(0)
+  status TaskStatus @default(TODO)
+
+  // تسک می‌تونه چند ممبر داشته باشه
+  assignedMembers TaskAssignment[]
+
+  taskLabels TaskLabel[]
+  comments   Comment[]
+  activity   Activity[]
+
+  @@index([columnId])
+  @@index([dueDate])
+}
+
+model TaskAssignment {
+  id        String  @id @default(uuid())
+  taskId    String
+  memberId  String
+
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  // @@unique([taskId, memberId]) // جلوگیری از تکرار
+}
+
+
+
+
+model Label {
+  id    String      @id @default(uuid())
+  name  String      @unique
+  tasks TaskLabel[]
+}
+
+model TaskLabel {
+  id      String @id @default(uuid())
+  taskId  String
+  labelId String
+
+  task  Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  label Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, labelId])
+  @@index([labelId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  authorId  String
+  taskId    String
+  text      String
+  createdAt DateTime @default(now())
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  task   Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+}
+
+model Activity {
+  id         String         @id @default(uuid())
+  action     ActivityAction
+  byId       String
+  taskId     String?
+  fromColumn String?
+  toColumn   String?
+  timestamp  DateTime       @default(now())
+
+  by   User  @relation("ActivityBy", fields: [byId], references: [id], onDelete: Cascade)
+  task Task? @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([byId])
+  @@index([taskId])
+}
