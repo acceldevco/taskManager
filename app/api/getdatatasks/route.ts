@@ -1,57 +1,105 @@
-// import { NextResponse } from "next/server";
-// import prisma from "@/prisma/prisma"; // مسیر فایل Prisma خودت رو جایگزین کن
+// // import { NextResponse } from "next/server";
+// // import prisma from "@/prisma/prisma"; // مسیر فایل Prisma خودت رو جایگزین کن
 
-// interface RouteParams {
-//   params: {
-//     id: string;
-//   };
-// }
+import { NextResponse } from "next/server";
+
+// // interface RouteParams {
+// //   params: {
+// //     id: string;
+// //   };
+// // }
+
+// // export async function POST(
+// //   req: Request,
+// //   { params }: { params: Promise<{ id: string }> }
+// // ) {
+// //   try {
+// //     var body: any = await req.json();
+
+// //     // const { searchParams } = new URL(req.url);
+// //     // console.log(body);
+// //     //  return NextResponse.json({message:body})
+
+// //     const id = body;
+
+// //     if (!id) {
+// //       return NextResponse.json(
+// //         { error: "Group ID is required" },
+// //         { status: 400 }
+// //       );
+// //     }
+
+// //     // اجرای Query مشابه داده‌ای که گفتی:
+// //     const group = await prisma.group.findUnique({
+// //       where: { id },
+
+// //       include: {
+// //         _count: {
+// //           select: { columns: true }, // اینجا تعداد ستون‌ها رو می‌گیری
+// //         },
+// //         members: {
+// //           include: {
+// //             assignedTasks: true, // وظایف اعضا
+// //           },
+// //         },
+// //         created_by: true, // سازنده گروه
+// //         columns: {
+// //           orderBy: {
+// //             order: "asc",
+// //           },
+// //           include: {
+// //             tasks: {
+// //               include: {
+// //                 assignedMembers: true, // اعضای اختصاص داده‌شده به تسک
+// //                 comments: {
+// //                   include: { author: true }, // نویسنده کامنت
+// //                 },
+// //               },
+// //             },
+// //           },
+// //         },
+// //       },
+// //     });
+
+// //     if (!group) {
+// //       return NextResponse.json({ error: "Group not found" }, { status: 404 });
+// //     }
+
+// //     return NextResponse.json(group);
+// //   } catch (error) {
+// //     console.error("Error fetching group details:", error);
+// //     return NextResponse.json({ error: "Server error" }, { status: 500 });
+// //   }
+// // }
+
+// import { NextResponse } from "next/server";
+// import prisma from "@/prisma/prisma";
 
 // export async function POST(
 //   req: Request,
-//   { params }: { params: Promise<{ id: string }> }
+//   { params }: { params: { id: string } } // ← اینجا Promise حذف شد
 // ) {
 //   try {
-//     var body: any = await req.json();
-
-//     // const { searchParams } = new URL(req.url);
-//     // console.log(body);
-//     //  return NextResponse.json({message:body})
-
-//     const id = body;
+//     const body: any = await req.json();
+//     const id = body?.id || params.id; // می‌توانی از body یا params استفاده کنی
 
 //     if (!id) {
-//       return NextResponse.json(
-//         { error: "Group ID is required" },
-//         { status: 400 }
-//       );
+//       return NextResponse.json({ error: "Group ID is required" }, { status: 400 });
 //     }
 
-//     // اجرای Query مشابه داده‌ای که گفتی:
 //     const group = await prisma.group.findUnique({
 //       where: { id },
-
 //       include: {
-//         _count: {
-//           select: { columns: true }, // اینجا تعداد ستون‌ها رو می‌گیری
-//         },
-//         members: {
-//           include: {
-//             assignedTasks: true, // وظایف اعضا
-//           },
-//         },
-//         created_by: true, // سازنده گروه
+//         _count: { select: { columns: true } },
+//         members: { include: { assignedTasks: true } },
+//         created_by: true,
 //         columns: {
-//           orderBy: {
-//             order: "asc",
-//           },
+//           orderBy: { order: "asc" },
 //           include: {
 //             tasks: {
 //               include: {
-//                 assignedMembers: true, // اعضای اختصاص داده‌شده به تسک
-//                 comments: {
-//                   include: { author: true }, // نویسنده کامنت
-//                 },
+//                 assignedMembers: true,
+//                 comments: { include: { author: true } },
 //               },
 //             },
 //           },
@@ -69,17 +117,12 @@
 //     return NextResponse.json({ error: "Server error" }, { status: 500 });
 //   }
 // }
-
-import { NextResponse } from "next/server";
-import prisma from "@/prisma/prisma";
-
-export async function POST(
-  req: Request,
-  { params }: { params: { id: string } } // ← اینجا Promise حذف شد
-) {
+/////////////////////////////////////////////
+import prisma from "@/prisma/prisma"
+export async function POST(req: Request) {
   try {
-    const body: any = await req.json();
-    const id = body?.id || params.id; // می‌توانی از body یا params استفاده کنی
+    const body = await req.json();
+    const id = body?.id;
 
     if (!id) {
       return NextResponse.json({ error: "Group ID is required" }, { status: 400 });
