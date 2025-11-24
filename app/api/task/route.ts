@@ -56,22 +56,24 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "groupId is required" }, { status: 400 });
     }
 
-    const columns = await prisma.column.findMany({
-      where: { groupId },
-      include: {
-        tasks: {
-          orderBy: { createdAt: "asc" },
-          include: {
-            assigned_to: true,
-            comments: true,
-            taskLabels: { include: { label: true } },
-          },
-        },
-      },
-      orderBy: { order: "asc" },
-    });
+    // const columns = await prisma.column.findMany({
+    //   where: { groupId },
+    //   include: {
+    //     tasks: {
+    //       orderBy: { createdAt: "asc" },
+    //       include: {
+    //         assigned_to: true,
+    //         comments: true,
+    //         taskLabels: { include: { label: true } },
+    //       },
+    //     },
+    //   },
+    //   orderBy: { order: "asc" },
+    // });
 
-    return NextResponse.json(columns, { status: 200 });
+    return NextResponse.json({}
+      // columns
+      , { status: 200 });
   } catch (error: any) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
