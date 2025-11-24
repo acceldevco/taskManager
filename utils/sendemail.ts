@@ -3,7 +3,9 @@ import { Resend } from "resend";
 import nodemailer from "nodemailer";
 // تنظیمات Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
-
+const EMILUSER: string = process.env.EMILUSER!
+const EMILPASS: string = process.env.EMILPASS!
+const HOSTEMAIL: string = process.env.HOSTEMAIL!
 // تابع ارسال ایمیل ورود
 export const sendVerificationEmail = async (
   email: string,
@@ -43,12 +45,12 @@ export const sendVerificationEmail = async (
 
     // کانفیگ SMTP از cPanel
     const transporter = nodemailer.createTransport({
-      host: "mail.acceldevco.ir", // آدرس SMTP از cPanel
+      host: HOSTEMAIL,//"mail.acceldevco.ir", // آدرس SMTP از cPanel
       port: 465, // SSL: 465 یا TLS: 587
       secure: true, // true برای SSL، false برای TLS
       auth: {
-        user: "taskno@acceldevco.ir",
-        pass: "~X,Vl(]Dyt-}A4M^",
+        user: EMILUSER,
+        pass: EMILPASS
       },
     });
 
