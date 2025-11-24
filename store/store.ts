@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import groupSlice from "@/app/features/group/groupSlice";
 import taskSlice from "@/app/features/tasks/taskSlice";
-import groupsListener from "./listeners/groupsListener";
-import tasksListener from "./listeners/tasksListener";
+// import groupsListener from "./listeners/groupsListener";
+// import tasksListener from "./listeners/tasksListener";
 import csrfMiddleware from "./middleware/csrf";
 export const store = configureStore({
   reducer: {
