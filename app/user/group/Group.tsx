@@ -439,7 +439,7 @@ export default function GroupList({ crypto }: any) {
             <div className="flex-1 w-full lg:max-w-md">
               <Input
                 defaultValue={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e:any) => setSearch(e.target.value)}
                 icon={<Search className="w-4 h-4" />}
                 placeholder="جستجو در گروه‌ها..."
                 className="bg-gray-50/50 border-gray-200 focus:bg-white transition-all duration-300"
