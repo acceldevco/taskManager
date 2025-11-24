@@ -11,8 +11,8 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<any>({});
-  const onSubmit: any = async (values) => {
+  }:any = useForm<any>({});
+  const onSubmit: any = async (values:any) => {
     setIsLoading(true);
         await fetch("/api/sendverification", {
       method: "POST",
