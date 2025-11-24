@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         visibility,       // "PUBLIC" یا "PRIVATE"
         coverImage,
         createdById: creator.id,
-        memberCount: Array.isArray(members) ? members.length : 0, // Add memberCount as required
+        // memberCount: Array.isArray(members) ? members.length : 0, // Add memberCount as required
       },
     });
 
